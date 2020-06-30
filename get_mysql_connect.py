@@ -1,6 +1,6 @@
 import pymysql
 
-def get_mysql():
+def get_cursor():
 
     mydb = pymysql.connect(
         host="your ip",

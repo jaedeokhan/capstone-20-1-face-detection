@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 import datetime
 import pymysql
-from get_mysql_connect import get_mysql
-from exit_class import ExitClass
+from get_mysql_connect import get_cursor
+from exit_class import finish_class
 
 date = datetime.datetime.now().date()
 date = str(date)
@@ -59,7 +59,7 @@ class CheckAttendance(Toplevel):
         self.scroll.grid(row=0, column=1, sticky=N+S)
             
         # mysql connection얻기
-        mydb, mycursor = get_mysql()
+        mydb, mycursor = get_cursor()
         mycursor.execute("SELECT * FROM last_member WHERE readcount >= 1 ORDER BY id DESC")
         persons = mycursor.fetchall()
         count = 1
@@ -83,4 +83,4 @@ class CheckAttendance(Toplevel):
         people = WebcamPage()
         
     def iExit(self):
-        ExitClass(self, self.heading)
+        finish_class(self, self.heading)

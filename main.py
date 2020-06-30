@@ -8,8 +8,8 @@ import cv2
 import pymysql
 # 두 번째 페이지로 가는 클래스 포함 패키지
 from loginpage import LoginPage
-from get_mysql_connect import get_mysql
-from exit_class import ExitClass
+from get_mysql_connect import get_cursor
+from exit_class import finish_class
 
 # 179 line data-dir 자신의 디렉토리 변경
 
@@ -130,7 +130,7 @@ class Application(object):
     #=================================================
     #===========종료 함수================================
     def iExit(self):
-        ExitClass(self, self.t1)    
+        (self, self.t1)    
     #========회원가입 얼굴 데이터 수집 누르면 실행함수=================
     def generate_dataset(self):
         if(self.t1.get()=="" or self.t1.get() == "아이디를 입력해주세요." or self.t2.get()=="" or self.t3.get()=="" or self.t4.get() =="" or self.t5.get() == ""):
@@ -138,7 +138,7 @@ class Application(object):
             self.t1.focus()
         else:
             # mysql connection 얻어오기
-            mydb, mycursor = get_mysql()
+            mydb, mycursor = get_cursor()
             mycursor.execute("SELECT * FROM last_member")
             myresult = mycursor.fetchall()
             id = 1

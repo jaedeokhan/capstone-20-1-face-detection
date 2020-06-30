@@ -4,8 +4,8 @@ import pymysql
 import datetime
 # 세 번째 페이지로 가는 클래스 포함 패키지
 from webcampage import WebcamPage
-from get_mysql_connect import get_mysql
-from exit_class import ExitClass
+from get_mysql_connect import get_cursor
+from exit_class import finish_class
 
 date = datetime.datetime.now().date()
 date = str(date)
@@ -86,7 +86,7 @@ class LoginPage(Toplevel):
         self.idt.focus()
     
     def iExit(self):    
-        ExitClass(self, self.idt)
+        finish_class(self, self.idt)
         
     def go_three(self):
         if(self.UserId.get()=="아이디를 입력해주세요." or self.Userpasswd.get()=="비밀번호를 입력해주세요."):
@@ -98,7 +98,7 @@ class LoginPage(Toplevel):
             """
             val = (self.UserId.get(), self.Userpasswd.get())
             # mysql connection 얻어오기
-            mydb, mycursor = get_mysql()
+            mydb, mycursor = get_cursor()
             mycursor.execute(sql, val)
             s = mycursor.fetchone()
             mydb.commit()

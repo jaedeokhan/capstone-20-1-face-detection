@@ -10,8 +10,8 @@ import sys
 import pymysql
 # 마지막 페이지로 가는 클래스 포함 패키지
 from checkattendance import CheckAttendance
-from get_mysql_connect import get_mysql
-from exit_class import ExitClass
+from get_mysql_connect import get_cursor
+from exit_class import finish_class
 
 # 153 line
 # 175 line
@@ -91,7 +91,7 @@ class WebcamPage(Toplevel):
     
     def detect_face(self):
         # mysql connection 얻어오기
-        mydb, mycursor = get_mysql()
+        mydb, mycursor = get_cursor()
         def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text, clf):
             
             features = None
@@ -106,7 +106,7 @@ class WebcamPage(Toplevel):
                 cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
                 id, pred = clf.predict(gray_image[y:y+h, x:x+w])
                 confidence = int(100 * (1 - pred / 300))
-                mydb, mycursor = get_mysql()
+                mydb, mycursor = get_cursor()
                 mycursor.execute("SELECT user_name from last_member where id=" + str(id))
                 s = mycursor.fetchone()
                 s = '' + ''.join(s)
@@ -169,7 +169,7 @@ class WebcamPage(Toplevel):
         self.bottom_title.focus()
         
     def iExit(self):    
-        ExitClass(self, self.heading)
+        finish_class(self, self.heading)
         
     def train_classifier(self):
         data_dir = "capstone-20-1-face-detection/final-webcam/final-webcam/data"
